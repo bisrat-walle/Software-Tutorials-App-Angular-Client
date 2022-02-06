@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Tutorials - All</title>
+	<link rel="stylesheet" type="text/css" th:href="@{../css/bootstrap.min.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{../css/style.css}">
+	<link rel="shortcut icon" href="../images/logo.png" type="image/x-icon">
+</head>
+<body>
+  <nav class="navbar navbar-expand-sm navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#"><img th:src="@{../images/logo.png}"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+
+          <ul class="navbar-nav mb-2 mb-lg-0">
+             
+            <li class="nav-item dropdown">
+              <a class="nav-link fw-bold dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: #747475;">
+                Tutorials<i class="bi bi-person-circle"></i>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" >
+                <li class="nav-item" th:if="${!isInstructor}">
+                  <a th:href="@{/tutorials/enrolled}" class="nav-link fw-bold ">Enrolled Tutorials</a>
+                </li>
+                  <li class="nav-item" th:if="${isInstructor}">
+                    <a th:href="@{/tutorials/create}" class="nav-link fw-bold ">Create Tutorial</a>
+                  </li>
+                  <li class="nav-item" th:if="${isInstructor}">
+                    <a th:href="@{/tutorials/mytutorials}" class="nav-link fw-bold ">My Tutorials</a>
+                  </li>
+                  <li class="nav-item" th:if="${loggedIn}">
+                    <a th:href="@{/tutorials/all}" class="nav-link fw-bold ">All Tutorials</a>
+                </li>
+				
+				
+				
+				
+				
+				
+              </ul>
+            </li>
+          
+        </ul>
+
+          <li class="nav-item" th:if="${user.getRole()} == 'ADMIN'">
+                    <a th:href="@{/admin}" class="nav-link fw-bold ">Manage System</a>
+          </li>
+          
+
+          <li class="nav-item" th:if="${loggedIn}">
+            <a class="nav-link fw-bold " aria-current="page" th:href="@{/profile}">My Profile</a>
+          </li>
+
+          <li class="nav-item" th:if="${!loggedIn}">
+            <a class="nav-link fw-bold " aria-current="page" th:href="@{/register}">Register</a>
+          </li>
+          <li class="nav-item" th:if="${!loggedIn}">
+            <a class="nav-link fw-bold "  th:href="@{/login}">Login</a>
+          </li>
+          <form method="POST" th:action="@{/logout}" th:if="${loggedIn}">
+            <li class="nav-item">
+              <button style="background:none;border:none;" type="submit" class="nav-link fw-bold ">Logout</button>
+            </li>
+          </form>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+    <div th:if="${tutorials.size()} == 0">
+	
+		<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="error-template">
+                <h1>
+                    Hey <span th:text="${user.getFullName()}"></span>,</h1>
+                <h2>
+                    No tutorials yet!</h2>
+                <div th:if="${!isInstructor}" class="error-details">
+                    Tutorials are coming up, stay tuned!
+                </div>
+                <div th:if="${isInstructor}" class="error-actions">
+                    <a th:href="@{/tutorials/create}" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-home"></span>
+                        Create tutorial for your clients </a><a href="mailto:bisratwalle3@gmail.com" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-envelope"></span> Contact Support Team </a>
+                </div>
+            </div>
+        </div>
+    </div>
+	</div>
+
+  </div>
+  
+  <div class="container tutorial-container">
+  
+
+	
+
+    <div class="card" th:each="tutorial : ${tutorials}" style="margin-bottom:30px;margin-left:5px;margin-right:5px">
+      <img th:src="@{../images/R.png}" th:class="card-img-top" alt="tutorial image">
+      <div th:class="card-body">
+        <h5 class="card-title" th:text="${tutorial.getTitle()}">Tutorial Title</h5>
+
+        <div class="tutorial-botton-container">
+          <a th:if="${isInstructor} or ${enrollementChecker.check(tutorial)}" th:href="@{/tutorials/detail/{tutorialId}(tutorialId=${tutorial.tutorialId})}" class="btn btn-primary">Explore</a>
+
+          <div th:if="${!isInstructor}">
+            <form th:if="${!enrollementChecker.check(tutorial)}" method="POST" th:action="@{/enroll}" th:object="${newEnrollement}">
+              <input type="hidden" name="tutorialId" th:value="${tutorial.tutorialId}">
+              <button type="submit" class="btn btn-primary">Enroll</button>
+            </form>
+            <form th:if="${enrollementChecker.check(tutorial)}" method="POST" th:action="@{/tutorials/enrolled}" th:object="${newEnrollement}">
+              <input type="hidden" name="tutorialId" th:value="${tutorial.tutorialId}">
+              <button type="submit" class="btn btn-primary">Unenroll</button>
+            </form>
+
+
+          </div>
+
+          <form th:if="${isInstructor} and ${enrollementChecker.checkTutorialInstructor(tutorial)}" th:action="@{/tutorials/edit}">
+            <input type="hidden" name="tutorialId" th:value="${tutorial.tutorialId}">
+            <button type="submit" class="btn btn-primary">Edit</button>
+          </form>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="text-center" style="margin:50px;">
+    &copy; Copyright All rights reserved!
+  </div>
+
+    <script th:src="@{../js/bootstrap.bundle.min.js}" ></script>
+    <script th:src="@{../js/bootstrap.min.js}" ></script>
+    <script th:src="@{../js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{../js/jquery-3.6.0.js}"></script>
+
+</body>
+
+</html>

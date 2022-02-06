@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Register</title>
+	<link rel="stylesheet" type="text/css" th:href="@{css/login.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{css/bootstrap.min.css}">
+	<link rel="shortcut icon" href="../images/logo.png" type="image/x-icon">
+</head>
+<body class="my-login-page">
+	<section class="h-100">
+		<div class="container h-100">
+			<div class="row justify-content-md-center h-100">
+				<div class="card-wrapper">
+					<div class="brand">
+						<img th:src="@{images/logo.png}" alt="bootstrap 4 login page">
+					</div>
+					<div class="card fat">
+						<div class="card-body">
+							<h4 class="card-title">Register</h4>
+							<form method="POST" class="my-login-validation" novalidate="" th:action="@{/register}" id="registerForm" th:object="${user}">
+								
+								<div th:if="${param.error}" class="alert alert-danger" th:text="${exception}">
+								Invalid username or email.
+								</div>
+								
+								<div class="form-group">
+									<label th:for="fullName">Full Name</label>
+									<input
+										th:class="|form-control ${#fields.hasErrors('fullName')? 'is-invalid': 'is-valid'}|"
+										type="text"
+										th:field="*{fullName}"
+									/>
+									<div
+										class="invalid-feedback"
+										th:if="${#fields.hasErrors('fullName')}"
+										th:errors="*{fullName}"
+									></div>
+								</div>
+								
+								<div class="form-group">
+									<label for="username">Username</label>
+									<input
+										th:class="|form-control ${#fields.hasErrors('username')? 'is-invalid': 'is-valid'}|"
+										type="text"
+										th:field="*{username}"
+									/>
+									<div
+										class="invalid-feedback"
+										th:if="${#fields.hasErrors('username')}"
+										th:errors="*{username}"
+									></div>
+								</div>
+
+								<div class="form-group">
+									<label for="email">Email Address</label>
+									<input
+										th:class="|form-control ${#fields.hasErrors('email')? 'is-invalid': 'is-valid'}|"
+										type="email"
+										th:field="*{email}"
+									/>
+									<div
+										class="invalid-feedback"
+										th:if="${#fields.hasErrors('email')}"
+										th:errors="*{email}"
+									></div>
+								</div>
+
+								<div class="form-group">
+									<label for="password">Password</label>
+									<input
+										th:class="|form-control ${#fields.hasErrors('password')? 'is-invalid': 'is-valid'}|"
+										type="password"
+										th:field="*{password}"
+									/>
+									<div
+										class="invalid-feedback"
+										th:if="${#fields.hasErrors('password')}"
+										th:errors="*{password}"
+									></div>
+								</div>
+
+								<div class="form-group">
+									Register as
+									  <div class="form-check">
+										<input
+										th:class="|form-check-input ${#fields.hasErrors('role')? 'is-invalid': 'is-valid'}|"
+										type="radio"
+										th:value="INSTRUCTOR"
+										th:field="*{role}"
+									/>
+									<label class="form-check-label" th:for="${#ids.prev('role')}"> Instructor </label>
+
+									  </div>
+
+									<div class="form-check">
+										<input
+										th:class="|form-check-input ${#fields.hasErrors('role')? 'is-invalid': 'is-valid'}|"
+										type="radio"
+										th:value="CLIENT"
+										th:field="*{role}"
+									/>
+									<label class="form-check-label" th:for="${#ids.prev('role')}"> Client </label>
+									
+									<div
+										class="invalid-feedback"
+										th:if="${#fields.hasErrors('role')}"
+										th:errors="*{role}"
+									></div>
+
+
+									  </div>
+								</div>
+
+								<div class="form-group m-0" style="margin-top:30px;">
+									<button style="width:100%;margin-top:30px;" type="submit" class="btn btn-primary btn-block">
+										Register
+									</button>
+								</div>
+								<div class="mt-4 text-center">
+									Already have an account? <a th:href="@{/login}">Login</a>
+								</div>
+								<div class="text-center" style="margin:10px;">
+									&copy; Copyright All rights reserved!
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</section>
+
+
+
+
+	<script th:src="@{js/bootstrap.min.js}" ></script>
+	<script th:src="@{js/login.js}"></script>
+</body>
+</html>
