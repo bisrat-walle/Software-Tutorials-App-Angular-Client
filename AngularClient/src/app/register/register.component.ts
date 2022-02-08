@@ -12,5 +12,6 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
 	this.title.setTitle("Register");
+	document.getElementsByTagName("body")[0]?.classList.add("my-login-page");
   }
 }
