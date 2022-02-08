@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +16,16 @@ import { HomeComponent } from './home/home.component';
 import { CreateTutorialComponent } from './create-tutorial/create-tutorial.component';
 import { EditTutorialComponent } from './edit-tutorial/edit-tutorial.component';
 import { AdminTutorialComponent } from './admin-tutorial/admin-tutorial.component';
+import { SharedService } from './shared.service';
+import { AuthGuard } from './auth.guard';
+import { ClientGuard } from './client.guard';
+import { InstructorGuard } from './instructor.guard';
+import { AdminGuard } from './admin.guard';
+
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DataTablesModule } from 'angular-datatables';
+
 
 @NgModule({
   declarations: [
@@ -34,9 +45,13 @@ import { AdminTutorialComponent } from './admin-tutorial/admin-tutorial.componen
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+	HttpClientModule,
+	FormsModule,
+	ReactiveFormsModule,
+	DataTablesModule
   ],
-  providers: [],
+  providers: [Title, SharedService, ClientGuard, InstructorGuard, AdminGuard, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

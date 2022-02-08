@@ -1,1 +1,83 @@
-<p>home works!</p>
+<nav class="navbar navbar-expand-sm navbar-light bg-light ">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="#"><img class="img-fluid " style="width:6rem" src="assets/logo.png"></a>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+			
+				<li class="nav-item" th:if="${user} != null and ${user.getRole()} == 'ADMIN'">
+                    <a routerLink="/admin" class="nav-link fw-bold ">Manage System</a>
+				</li>
+
+				<li class="nav-item" th:if="${loggedIn}">
+					<a routerLink="/tutorials/all" class="nav-link fw-bold ">Explore Tutorials ... </a>
+				</li>
+
+				<li class="nav-item" th:if="${!loggedIn}">
+					<a routerLink="/login" class="nav-link fw-bold ">Explore Tutorials ... </a>
+				</li>
+
+				<li class="nav-item" th:if="${loggedIn}">
+					<a class="nav-link fw-bold " aria-current="page" routerLink="profile">My Profile</a>
+				</li>
+
+				<li class="nav-item" th:if="${!loggedIn}">
+					<a class="nav-link fw-bold " aria-current="page" routerLink="register">Register</a>
+				</li>
+				<li class="nav-item" th:if="${!loggedIn}">
+					<a class="nav-link fw-bold "  routerLink="/login">Login</a>
+				</li>
+				<form method="POST" th:action="@{/logout}" th:if="${loggedIn}">
+					<li class="nav-item">
+						<button style="background:none;border:none;" type="submit" class="nav-link fw-bold ">Logout</button>
+					</li>
+				</form>
+			</ul>
+		</div>
+	</div>
+</nav>
+<p class="mt-4 display-3 text-center fw-bold  py-sm-4" >Here is the best place for...</p>
+
+<div class="row">
+	<div class="col-md-6 col-lg-4">
+		<div class="card"><img class="card-img-top img-fluid" src="assets/sucess.png" />
+		</div>
+	</div>
+	<div class="col-md-6 col-lg-4">
+		<div class="card"><img alt="Card image cap" class="card-img-top img-fluid" src="assets/news.png"/>
+		</div>
+	</div>
+	<div class="col-md-6 col-lg-4">
+		<div class="card"><img alt="Card image cap" class="card-img-top img-fluid" src="assets/know.png" />
+		</div>
+	</div>
+
+	<div class="col-md-6 col-lg-4">
+		<div class="card"><img alt="Card image cap" class="card-img-top img-fluid" src="assets/R.png" />
+
+		</div>
+	</div>
+
+	<div class="col-md-6 col-lg-4">
+		<div class="card"><img alt="Card image cap" class="card-img-top img-fluid" src="assets/capacity.png" />
+
+		</div>
+	</div>
+
+	<div class="col-md-6 col-lg-4">
+		<div class="card"><img alt="Card image cap" class="card-img-top img-fluid"  src="assets/class.png" />
+
+		</div>
+	</div>
+</div>
+
+
+<div class="display-5 py-sm-3 text-center" style="transform: scale(1.5); margin-top: 30px;">
+
+	<a th:if="${loggedIn}" routerLink="/tutorials/all" class="btn btn-main btn-primary">Explore Tutorials ... </a>
+	<a th:if="${!loggedIn}" routerLink="/login" class="btn btn-main btn-primary">Explore Tutorials ... </a>
+
+</div>
+
+<div class="text-center" style="margin:50px;">
+	&copy; Copyright All rights reserved!
+</div>
