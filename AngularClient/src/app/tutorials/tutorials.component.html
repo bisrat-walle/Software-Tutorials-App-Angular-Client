@@ -1,1 +1,65 @@
-<p>tutorials works!</p>
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#"><img src="assets/logo.png"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+
+          <ul class="navbar-nav mb-2 mb-lg-0" ngbDropdown>
+             
+            <li class="nav-item dropdown">
+              <a class="nav-link fw-bold dropdown-toggle" id="dropdownBasic1" ngbDropdownToggle role="button" style="color: #747475;">
+                Tutorials<i class="bi bi-person-circle"></i>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" ngbDropdownMenu aria-labelledby="dropdownBasic1" >
+                <li class="nav-item" th:if="${!isInstructor}">
+                  <a th:href="@{/tutorials/enrolled}" class="nav-link fw-bold " ngbDropdownItem>Enrolled Tutorials</a>
+                </li>
+                  <li class="nav-item" th:if="${isInstructor}">
+                     <a th:href="@{/tutorials/create}" class="nav-link fw-bold " ngbDropdownItem>Create Tutorial</a>
+                  </li>
+                  <li class="nav-item" th:if="${isInstructor}">
+                    <a th:href="@{/tutorials/mytutorials}" class="nav-link fw-bold " ngbDropdownItem>My Tutorials</a>
+                  </li>
+                  <li class="nav-item" th:if="${loggedIn}">
+                    <a th:href="@{/tutorials/all}" class="nav-link fw-bold " ngbDropdownItem>All Tutorials</a>
+                </li>  
+				
+              </ul>
+            </li>
+          
+        </ul>
+
+          <li class="nav-item" th:if="${user.getRole()} == 'ADMIN'">
+                    <a th:href="@{/admin}" class="nav-link fw-bold ">Manage System</a>
+          </li>
+          
+
+          <li class="nav-item" th:if="${loggedIn}">
+            <a class="nav-link fw-bold " aria-current="page" th:href="@{/profile}">My Profile</a>
+          </li>
+
+          <li class="nav-item" th:if="${!loggedIn}">
+            <a class="nav-link fw-bold " aria-current="page" th:href="@{/register}">Register</a>
+          </li>
+          <li class="nav-item" th:if="${!loggedIn}">
+            <a class="nav-link fw-bold "  th:href="@{/login}">Login</a>
+          </li>
+          <form method="POST" th:action="@{/logout}" th:if="${loggedIn}">
+            <li class="nav-item">
+              <button style="background:none;border:none;" type="submit" class="nav-link fw-bold ">Logout</button>
+            </li>
+          </form>
+        </ul>
+      </div>
+    </div>
+	
+
+
+	
+  </nav>

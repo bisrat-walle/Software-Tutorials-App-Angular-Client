@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, Title } from '@angular/platform-browser';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -49,7 +50,8 @@ import { DataTablesModule } from 'angular-datatables';
 	HttpClientModule,
 	FormsModule,
 	ReactiveFormsModule,
-	DataTablesModule
+	DataTablesModule,
+	NgbModule
   ],
   providers: [Title, SharedService, ClientGuard, InstructorGuard, AdminGuard, AuthGuard],
   bootstrap: [AppComponent]
