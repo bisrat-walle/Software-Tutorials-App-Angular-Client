@@ -1,1 +1,164 @@
-<p>admin-tutorial works!</p>
+<nav class="navbar navbar-expand-sm navbar-light bg-light fixed-top border-bottom border-white">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="#"><img class="img-fluid " style="width:6rem" src="assets/logo.png"></a>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+				<li class="nav-item">
+					<a routerLink="/tutorials/all" class="nav-link fw-bold ">Explore Tutorials ... </a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link fw-bold " aria-current="page" routerLink="/profile">My Profile</a>
+				</li>
+				<form method="POST" th:action="@{/logout}">
+					<li class="nav-item">
+						<button style="background:none;border:none;" type="submit" class="nav-link fw-bold ">Logout</button>
+					</li>
+				</form>
+				
+				
+			</ul>
+			
+			<button class="navbar-toggler me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                <span class="navbar-toggler-icon" data-bs-target="#offcanvasExample"></span>
+              </button>
+			
+		</div>
+	</div>
+</nav>
+
+
+
+    <!-- navigation end -->
+
+    <!-- side navbar -->
+    
+      
+      <div class="offcanvas offcanvas-start bg-light text-white sidebar-nav" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel" style="top:95px">
+        <div class="offcanvas-header pd-0">
+            <nav class="navbar-dark">
+                <ul class="navbar-nav">
+                    <li>
+                        <div class="text-uppercase small fw-bold  px-1 admin-control">
+                            admin control
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#dash" class="nav-link px-3 active">
+                            <span class="me-2">
+                                <i class="bi bi-speedometer"></i>
+                            </span>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="my-3">
+                        <hr class="dropdown-divider "/>
+                    </li>
+                    <li>
+                        <div class="text-uppercase small fw-bold  px-1 admin-control">
+                            SW Tutorials
+                        </div>
+                    </li>
+                    <li>
+                        <a class="nav-link px-3 sidebar-nav sidebar-col " 
+                        data-bs-toggle="collapse" 
+                        role="button" aria-expanded="false" aria-controls="collapseExample">
+						    <!--href="#collapseExample"-->
+                            <span class="me-2"><i class="bi bi-layout-split"></i></span>
+                            <span class="text-white">Manage</span>
+
+                            <span class="right-shift ms-auto mx-3">
+                                <i class="bi bi-chevron-double-down"></i>
+                            </span>
+                          </a>
+
+                    </li>
+                </ul>
+            </nav>
+             
+      </div>
+      </div>
+    <!-- side navbar end -->
+	
+	
+
+    <!-- main page -->
+    <main class="mt-5 pt-3">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12 fw-bold fs-3"><span id="dash">Dashboard
+
+                </span></div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            Statistics
+                        </div>
+
+                        <div class="card-body">
+                            <canvas class="chart" width="300" height="200"></canvas>
+							<div>Instructors <span id="instructorSize" th:text="${totalInstructor.size()}"></span></div>
+							<div>Clients <span id="clientSize" th:text="${totalClient.size()}"></span></div>
+							<div>Tutorials <span id="tutorialSize" th:text="${totalTutorial.size()}"></span></div>
+							<div>Enrollements <span id="enrollementSize" th:text="${totalEnrollement.size()}"></span></div>
+                            <div>Projects <span id="projectSize" th:text="${totalProject.size()}"></span></div>
+                        </div>
+                    </div>
+                </div>
+            
+             </div>
+
+             <div class="row mt-5">
+                 <div class="col-md-12">
+                     <div class="card">
+                         <div class="card-header">
+                             MANAGE TUTORIALS
+                         </div>
+                         <div class="card-body">
+                             <div class="table-responsive">
+                                 <table id="example" class="table table-striped data-table" style="width: 100%;">
+                                     <thead>
+                                         <tr>
+                                             <th>Title</th>
+                                             <th>Instructor </th>
+                                             <th>Action</th>
+                                         </tr>
+                                     </thead>
+                                     <tbody>
+
+                                         <tr th:each="tutorial : ${totalTutorial}">
+                                             <td th:text="*{tutorial.getTitle()}"></td>
+                                             <td th:text="*{tutorial.getInstructor().getFullName()}"></td>
+                                             <td class="tut-bottons">
+											 
+											     <a th:href="@{/tutorials/detail/{tutorialId}(tutorialId=${tutorial.tutorialId})}" class="btn btn-primary">Explore</a>
+                                                 <form method="POST" th:action="@{/tutorials/delete}">
+                                                    <input type="hidden" th:value="${tutorial.tutorialId}" name="tutorialId" id="tutorialId">
+                                                    <button type="submit" class="btn btn-danger ">DELETE</button>
+                                                 </form>
+                                             </td>
+                                         </tr>
+                                     </tbody>
+                                     <tfoot>
+                                        <tr></tr>
+                                    </tfoot>
+									
+									
+                                 </table>
+								 
+								 <div class="text-center">
+                                            &copy; 2021 All rights reserved!
+                                        </div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+
+        </div>
+    </main>
+    <!-- main page ends -->

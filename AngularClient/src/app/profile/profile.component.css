@@ -1,0 +1,9 @@
+        .card {
+            min-width: 600px;
+            margin: 40px auto;
+            padding: 30px;
+        }
+
+        h5, pre{
+            display: inline;
+        }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser'; 
-import { Chart } from 'chart.js'; 
+import { Chart, BarElement, BarController, CategoryScale, LinearScale, Decimation, Filler, Legend, Title as ChartTitle, Tooltip } from 'chart.js'; 
+import * as $ from "jquery";
 
 @Component({
   selector: 'app-admin-tutorial',
@@ -9,7 +10,9 @@ import { Chart } from 'chart.js';
 })
 export class AdminTutorialComponent implements OnInit {
 
-  constructor(private title:Title) { }
+  constructor(private title:Title) {
+	Chart.register(BarElement, BarController, CategoryScale, Decimation, Filler, Legend, ChartTitle, Tooltip, LinearScale );
+  }
 
   ngOnInit(): void {
 	this.title.setTitle("Manage Tutorials");
@@ -28,7 +31,7 @@ export class AdminTutorialComponent implements OnInit {
 					{
 						label: "Instructors - Clients - Instructors - Tutorials",
 						data: [
-							parseInt(document.getElementById("instructorSize")?.innerHTML || '0'),
+							parseInt(document.getElementById("instructorSize")?.innerHTML || '10'),
 							parseInt(document.getElementById("clientSize")?.innerHTML || '0'),
 							parseInt(document.getElementById("enrollementSize")?.innerHTML || '0'),
 							parseInt(document.getElementById("tutorialSize")?.innerHTML || '0')

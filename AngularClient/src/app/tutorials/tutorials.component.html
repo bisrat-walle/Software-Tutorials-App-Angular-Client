@@ -18,16 +18,16 @@
               </a>
               <ul class="dropdown-menu dropdown-menu-end" ngbDropdownMenu aria-labelledby="dropdownBasic1" >
                 <li class="nav-item" th:if="${!isInstructor}">
-                  <a th:href="@{/tutorials/enrolled}" class="nav-link fw-bold " ngbDropdownItem>Enrolled Tutorials</a>
+                  <a routerLink="/tutorials/enrolled" class="nav-link fw-bold " ngbDropdownItem>Enrolled Tutorials</a>
                 </li>
                   <li class="nav-item" th:if="${isInstructor}">
-                     <a th:href="@{/tutorials/create}" class="nav-link fw-bold " ngbDropdownItem>Create Tutorial</a>
+                     <a routerLink="/tutorials/create" class="nav-link fw-bold " ngbDropdownItem>Create Tutorial</a>
                   </li>
                   <li class="nav-item" th:if="${isInstructor}">
-                    <a th:href="@{/tutorials/mytutorials}" class="nav-link fw-bold " ngbDropdownItem>My Tutorials</a>
+                    <a routerLink="/tutorials/mytutorials" class="nav-link fw-bold " ngbDropdownItem>My Tutorials</a>
                   </li>
-                  <li class="nav-item" th:if="${loggedIn}">
-                    <a th:href="@{/tutorials/all}" class="nav-link fw-bold " ngbDropdownItem>All Tutorials</a>
+                  <li class="nav-item">
+                    <a routerLink="/tutorials/all" class="nav-link fw-bold " ngbDropdownItem>All Tutorials</a>
                 </li>  
 				
               </ul>
@@ -36,21 +36,15 @@
         </ul>
 
           <li class="nav-item" th:if="${user.getRole()} == 'ADMIN'">
-                    <a th:href="@{/admin}" class="nav-link fw-bold ">Manage System</a>
+                    <a routerLink="/manage/tutorials" class="nav-link fw-bold ">Manage System</a>
           </li>
           
 
-          <li class="nav-item" th:if="${loggedIn}">
-            <a class="nav-link fw-bold " aria-current="page" th:href="@{/profile}">My Profile</a>
+          <li class="nav-item">
+            <a class="nav-link fw-bold " aria-current="page" routerLink="/profile">My Profile</a>
           </li>
-
-          <li class="nav-item" th:if="${!loggedIn}">
-            <a class="nav-link fw-bold " aria-current="page" th:href="@{/register}">Register</a>
-          </li>
-          <li class="nav-item" th:if="${!loggedIn}">
-            <a class="nav-link fw-bold "  th:href="@{/login}">Login</a>
-          </li>
-          <form method="POST" th:action="@{/logout}" th:if="${loggedIn}">
+		  
+          <form method="POST" th:action="@{/logout}">
             <li class="nav-item">
               <button style="background:none;border:none;" type="submit" class="nav-link fw-bold ">Logout</button>
             </li>
@@ -63,3 +57,70 @@
 
 	
   </nav>
+  
+  
+      <div th:if="${tutorials.size()} == 0">
+	
+		<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="error-template">
+                <h1>
+                    Hey <span th:text="${user.getFullName()}"></span>,</h1>
+                <h2>
+                    No tutorials yet!</h2>
+                <div th:if="${!isInstructor}" class="error-details">
+                    Tutorials are coming up, stay tuned!
+                </div>
+                <div th:if="${isInstructor}" class="error-actions">
+                    <a routerLink="/tutorials/create" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-home"></span>
+                        Create tutorial for your clients </a><a href="mailto:bisratwalle3@gmail.com" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-envelope"></span> Contact Support Team </a>
+                </div>
+            </div>
+        </div>
+    </div>
+	</div>
+
+  </div>
+  
+  <div class="container tutorial-container">
+  
+
+	
+
+    <div class="card" th:each="tutorial : ${tutorials}" style="margin-bottom:30px;margin-left:5px;margin-right:5px">
+      <img src="assets/R.png" class="card-img-top" alt="tutorial image">
+      <div class="card-body">
+        <h5 class="card-title" th:text="${tutorial.getTitle()}">Tutorial Title</h5>
+
+        <div class="tutorial-botton-container">
+          <a th:if="${isInstructor} or ${enrollementChecker.check(tutorial)}" th:href="@{/tutorials/detail/{tutorialId}(tutorialId=${tutorial.tutorialId})}" class="btn btn-primary">Explore</a>
+
+          <div th:if="${!isInstructor}">
+            <form th:if="${!enrollementChecker.check(tutorial)}" method="POST" th:action="@{/enroll}" th:object="${newEnrollement}">
+              <input type="hidden" name="tutorialId" th:value="${tutorial.tutorialId}">
+              <button type="submit" class="btn btn-primary">Enroll</button>
+            </form>
+            <form th:if="${enrollementChecker.check(tutorial)}" method="POST" th:action="@{/tutorials/enrolled}" th:object="${newEnrollement}">
+              <input type="hidden" name="tutorialId" th:value="${tutorial.tutorialId}">
+              <button type="submit" class="btn btn-primary">Unenroll</button>
+            </form>
+
+
+          </div>
+
+          <form th:if="${isInstructor} and ${enrollementChecker.checkTutorialInstructor(tutorial)}" th:action="@{/tutorials/edit}">
+            <input type="hidden" name="tutorialId" th:value="${tutorial.tutorialId}">
+            <button type="submit" class="btn btn-primary">Edit</button>
+          </form>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="text-center" style="margin:50px;">
+    &copy; Copyright All rights reserved!
+  </div>

@@ -1,1 +1,112 @@
-<p>create-tutorial works!</p>
+
+<nav class="navbar navbar-expand-sm navbar-light bg-light ">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#"><img class="img-fluid " style="width:6rem" src="assets/logo.png"></a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                
+				<ul class="navbar-nav mb-2 mb-lg-0" ngbDropdown>
+					 
+					<li class="nav-item dropdown">
+					  <a class="nav-link fw-bold dropdown-toggle" id="dropdownBasic1" ngbDropdownToggle role="button" style="color: #747475;">
+						Tutorials<i class="bi bi-person-circle"></i>
+					  </a>
+					  <ul class="dropdown-menu dropdown-menu-end" ngbDropdownMenu aria-labelledby="dropdownBasic1" >
+						  <li class="nav-item" th:if="${isInstructor}">
+							 <a routerLink="/tutorials/create" class="nav-link fw-bold " ngbDropdownItem>Create Tutorial</a>
+						  </li>
+						  <li class="nav-item">
+							<a routerLink="/tutorials/all" class="nav-link fw-bold " ngbDropdownItem>All Tutorials</a>
+						</li>  
+						
+					  </ul>
+					</li>
+				  
+				</ul>
+
+                
+
+                <li class="nav-item">
+                    <a class="nav-link fw-bold " aria-current="page" th:href="@{/profile}">My Profile</a>
+                </li>
+
+				<li class="nav-item">
+					<a class="nav-link fw-bold " aria-current="page" routerLink="/profile">My Profile</a>
+				  </li>
+				  
+				  <form method="POST" th:action="@{/logout}">
+					<li class="nav-item">
+					  <button style="background:none;border:none;" type="submit" class="nav-link fw-bold ">Logout</button>
+					</li>
+				  </form>
+            </ul>
+        </div>
+    </div>
+</nav>
+	
+	<form th:method="POST" th:object="${tutorial}" class="create-tutorial-body container">
+        <h5 class="form-label my-form-label">Add Tutorial</h5>
+        <div th:if="${param.error}" class="alert alert-danger">
+            Validation Error, Please make sure you entered a valid input.
+        </div>
+		<div class="mb-3">
+		  <div>
+          <label for="title" class="form-label mt-2" style="max-width:500px">Enter title</label>
+          <input
+		      class="form-control"
+              th:class="|form-control ${#fields.hasErrors('title')? 'is-invalid': 'is-valid'}|"
+              type="text"
+              th:field="*{title}"
+          />
+          <div
+              class="invalid-feedback"
+              th:if="${#fields.hasErrors('title')}"
+              th:errors="*{title}"
+          ></div>
+		  </div>
+		</div>
+		<div class="mb-3">
+		  <label for="content" 
+		  class="form-label">Enter the tutorial content below</label>
+		  <textarea 
+		   class="form-control"
+		   th:field="*{content}" 
+		   th:class="|form-control ${#fields.hasErrors('content')? 'is-invalid': 'is-valid'}|"
+		   rows="10">
+		</textarea>
+		
+		<div
+              class="invalid-feedback"
+              th:if="${#fields.hasErrors('content')}"
+              th:errors="*{content}"
+          ></div>
+		</div>
+
+        <hr>
+        <h5 class="form-label my-form-label">Project (optional)</h5>
+        <div class="mb-3">
+
+            <label for="project_title"
+                   class="form-label">Enter project title here</label>
+            <input style="max-width:500px" class="form-control is-valid mt-2" type="text" name="project_title" id="project_title">
+            <label class="form-label mt-2" for="project_statement">Please clearly state problem statement below</label>
+            <textarea
+                    class="form-control is-valid mt-2"
+                    name="project_statement"
+                    id="project_statement"
+                    rows="3">
+		  </textarea>
+        </div>
+
+		<div class="text-center">
+            <button type="submit" class="btn btn-primary mt-2">
+                Add Tutorial
+            </button>
+        </div>
+
+	</form>
+
+    <div class="text-center" style="margin:50px;">
+        &copy; Copyright All rights reserved!
+    </div>

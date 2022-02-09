@@ -1,1 +1,92 @@
-<p>profile works!</p>
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#"><img src="assets/logo.png"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+
+          <ul class="navbar-nav mb-2 mb-lg-0" ngbDropdown>
+             
+            <li class="nav-item dropdown">
+              <a class="nav-link fw-bold dropdown-toggle" id="dropdownBasic1" ngbDropdownToggle role="button" style="color: #747475;">
+                Tutorials<i class="bi bi-person-circle"></i>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" ngbDropdownMenu aria-labelledby="dropdownBasic1" >
+                <li class="nav-item" th:if="${!isInstructor}">
+                  <a routerLink="/tutorials/enrolled" class="nav-link fw-bold " ngbDropdownItem>Enrolled Tutorials</a>
+                </li>
+                  <li class="nav-item" th:if="${isInstructor}">
+                     <a routerLink="/tutorials/create" class="nav-link fw-bold " ngbDropdownItem>Create Tutorial</a>
+                  </li>
+                  <li class="nav-item" th:if="${isInstructor}">
+                    <a routerLink="/tutorials/mytutorials" class="nav-link fw-bold " ngbDropdownItem>My Tutorials</a>
+                  </li>
+                  <li class="nav-item">
+                    <a routerLink="/tutorials/all" class="nav-link fw-bold " ngbDropdownItem>All Tutorials</a>
+                </li>  
+				
+              </ul>
+            </li>
+          
+        </ul>
+
+          <li class="nav-item" th:if="${user.getRole()} == 'ADMIN'">
+                    <a routerLink="/manage/tutorials" class="nav-link fw-bold ">Manage System</a>
+          </li>
+          
+
+          <li class="nav-item">
+            <a class="nav-link fw-bold " aria-current="page" routerLink="/profile">My Profile</a>
+          </li>
+		  
+          <form method="POST" th:action="@{/logout}">
+            <li class="nav-item">
+              <button style="background:none;border:none;" type="submit" class="nav-link fw-bold ">Logout</button>
+            </li>
+          </form>
+        </ul>
+      </div>
+    </div>
+	
+
+
+	
+  </nav>
+
+
+<div class="card" style="width: 18rem;" th:object="${user}">
+    <div class="card-body">
+        <div style="margin: 10px;">
+            <h5><span>Full name:  </span></h5> <h5 class="card-title" th:text="${user.getFullName()}">Card title</h5> <br>
+        </div>
+        
+        <div style="margin: 10px;">
+            <h5><span>Username:   </span></h5><h5 class="card-subtitle mb-2 text-muted" th:text="${user.getUsername()}">Card subtitle</h5>
+        </div>
+
+        <div style="margin: 10px;">
+            <h5><span>Role:   </span></h5><h5 class="card-subtitle mb-2 text-muted" th:text="${user.getRole()}">Card subtitle</h5>
+        </div>
+        
+        <!-- <p class="card-text">Enrolled: <span></span></p> -->
+
+<br>
+            <!--            <input type="hidden" name="tutorialId" th:value="${tutorial.tutorialId}">-->
+            
+            
+            <div style="margin-top: 50px;">
+                <a routerLink="/profile/edit" class="card-link">edit profile</a>
+                <a routerLink="/tutorials/all" class="card-link">Back to tutorials</a>
+            </div>
+    </div>
+</div>
+
+
+<div class="text-center" style="margin:50px;">
+    &copy; Copyright All rights reserved!
+</div>
