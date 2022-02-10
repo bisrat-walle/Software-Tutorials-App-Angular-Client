@@ -15,10 +15,10 @@ public class TutorialService {
     @Autowired
     EnrollementRepository enrollementRepository;
 
-    void deleteTutorialCascadeProject(Long id){
+    public void deleteTutorialCascadeProject(Long id){
         Tutorial tutorial = tutorialRepository.findByTutorialId(id);
         if (tutorial.getProject() != null){
-            projectRepository.delete(tutorial.getProject());
+            projectRepository.deleteById(tutorial.getProject().getProjectId());
         }
 
         enrollementRepository.getEnrollementFromTutorial(tutorial).forEach(
