@@ -1,0 +1,64 @@
+GET http://localhost:8080/api/v1/tutorials/all
+
+###
+GET http://localhost:8080/api/v1/tutorials/enrolled/client
+
+###
+POST http://localhost:8080/api/v1/tutorials/enroll/client/12/"
+
+###
+DELETE http://localhost:8080/api/v1/tutorials/enrolled/client/4
+
+###
+GET http://localhost:8080/api/v1/tutorials/mytutorials/instructor
+
+### create tutorial
+POST http://localhost:8080/api/v1/tutorials/mytutorials/instructor/  HTTP/1.1
+content-type: application/json
+
+{
+    "title": "Tutorial through an API with project",
+    "content": "Tutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfd",
+    "project":{
+        "name":"Project through API",
+        "problemStatement":"This is project statement using an apiThis is project statement using an apiThis is project statement using an apiThis is project statement using an apiThis is project statement using an apiThis is project statement using an apiThis is project statement using an apiThis is project statement using an apiThis is project statement using an apiThis is project statement using an apiThis is project statement using an apiThis is project statement using an apiThis is project statement using an apiThis is project statement using an apiThis is project statement using an apiThis is project statement using an apiThis is project statement using an apiThis is project statement using an apiThis is project statement using an apiThis is project statement using an api"
+    }
+}
+
+### put tutorial
+PUT http://localhost:8080/api/v1/tutorials/mytutorials/14
+content-type: application/json
+
+{
+    "title": "Tutorial through an API but edited",
+    "content": "Tutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfdTutorial api fdlsjfajfsdakhfdlsjfajfsdakhfd",
+    "project":{
+        "title":"Project through API",
+        "problemStatement":"This is project statement using an apiThis is project statement using an apiThis is project statement using an apiThis is project statement using an apiThis is project statement using an apiThis is project statement using an apiThis is project statement using an apiThis is project statement using an apiThis is project statement using an apiThis is project statement using an apiThis is project statement using an apiThis is project statement using an apiThis is project statement using an apiThis is project statement using an apiThis is project statement using an apiThis is project statement using an apiThis is project statement using an apiThis is project statement using an apiThis is project statement using an apiThis is project statement using an api"
+    },
+    "instructor": {
+      "id": 2,
+      "username": "instructor1",
+      "email": "instructor@cl.com",
+      "fullName": "instructor1",
+      "password": "$2a$10$XShefA7./7MCOziuGTRkqets578zGzWgxtim46HhzmWxRdtTzX.Fm",
+      "role": "INSTRUCTOR"
+    }
+}
+
+### patch tutorial
+
+PATCH  http://localhost:8080/api/v1/tutorials/mytutorials/14
+content-type: application/json
+
+{
+    "title": "Tutorial through an API but edited with PATCH"
+}
+
+
+### delete tutorial
+DELETE   http://localhost:8080/api/v1/tutorials/mytutorials/14
+
+
+### tutorial detail
+GET   http://localhost:8080/api/v1/tutorials/detail/12

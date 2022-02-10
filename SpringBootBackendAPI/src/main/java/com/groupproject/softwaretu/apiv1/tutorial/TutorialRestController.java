@@ -3,9 +3,13 @@ package com.groupproject.softwaretu.apiv1.tutorial;
 import com.groupproject.softwaretu.tutorial.TutorialRepository;
 import com.groupproject.softwaretu.tutorial.TutorialService;
 import com.groupproject.softwaretu.tutorial.Tutorial;
+
+import java.time.LocalDateTime;
+
 import com.groupproject.softwaretu.enrollement.Enrollement;
 import com.groupproject.softwaretu.enrollement.EnrollementRepository;
 import com.groupproject.softwaretu.project.ProjectRepository;
+import com.groupproject.softwaretu.security.User;
 import com.groupproject.softwaretu.security.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +27,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 
 
 @RestController
 @RequestMapping(path="api/v1/tutorials", produces="application/json")
+@CrossOrigin(origins = "*")
 public class TutorialRestController {
     
     
@@ -55,6 +61,24 @@ public class TutorialRestController {
     public ResponseEntity<Iterable<Tutorial>> getEnrolledTutorials(@PathVariable("username") String username){
         return new ResponseEntity<>(
             enrollementRepository.getEnrolledTutorials(userRepository.findByUsername(username)), HttpStatus.OK);
+    }
+
+    @PostMapping("/enroll/{username}/{tutorialId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void enroll( 
+                        @PathVariable("tutorialId") Long tutorialId,
+                        @PathVariable("username") String username
+                        ) {
+
+        
+        Enrollement newEnrollement = new Enrollement();
+        newEnrollement.setEnrolledAt(LocalDateTime.now());
+
+        Tutorial tutorial= tutorialRepository.findByTutorialId(tutorialId);
+        User client = userRepository.findByUsername(username);
+        newEnrollement.setClient(client);
+        newEnrollement.setTutorial(tutorial);
+        enrollementRepository.save(newEnrollement);
     }
 
     @DeleteMapping("/enrolled/{username}/{tutorialId}")
@@ -125,9 +149,10 @@ public class TutorialRestController {
 
     @PostMapping("/{tutorialId}/{username}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void submitProject(@PathVariable("tutorialId") Long tutorialId, 
+    public void submitProject(
+                    @PathVariable("tutorialId") Long tutorialId, 
                     @PathVariable("username") String username,
-                    @RequestParam(name = "projectUrl") String projectUrl){
+                    @RequestParam ProjectSubmission project){
         
 
         Enrollement enrollement = enrollementRepository.
@@ -135,7 +160,7 @@ public class TutorialRestController {
                     userRepository.findByUsername(username),
                      tutorialRepository.findByTutorialId(tutorialId));
         
-        enrollement.setGithubLink(projectUrl);
+        enrollement.setGithubLink(project.projectUrl);
         enrollementRepository.save(enrollement);
     }
 

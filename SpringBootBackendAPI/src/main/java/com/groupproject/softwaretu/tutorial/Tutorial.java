@@ -13,6 +13,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Data
@@ -33,6 +34,7 @@ public class Tutorial implements Serializable {
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
+	@JsonIgnore
     @OneToMany(mappedBy = "tutorial", cascade=CascadeType.ALL)
     Set<Enrollement> enrollements;
 	

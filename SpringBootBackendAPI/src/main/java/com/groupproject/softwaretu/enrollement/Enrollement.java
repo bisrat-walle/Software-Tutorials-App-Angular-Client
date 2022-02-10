@@ -9,10 +9,11 @@ import javax.validation.constraints.Pattern;
 import com.groupproject.softwaretu.tutorial.Tutorial;
 import com.groupproject.softwaretu.security.User;
 import lombok.Data;
+import java.io.Serializable;
 
 @Entity
 @Data
-public class Enrollement {
+public class Enrollement implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long enrollementId;
