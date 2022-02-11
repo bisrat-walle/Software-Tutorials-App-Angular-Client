@@ -1,13 +1,13 @@
 GET http://localhost:8080/api/v1/tutorials/all
 
 ###
-GET http://localhost:8080/api/v1/tutorials/enrolled/client
+GET http://localhost:8080/api/v1/tutorials/enrolled/client1
 
 ###
-POST http://localhost:8080/api/v1/tutorials/enroll/client/12/"
+POST http://localhost:8080/api/v1/tutorials/enroll/client/12/
 
 ###
-DELETE http://localhost:8080/api/v1/tutorials/enrolled/client/4
+DELETE http://localhost:8080/api/v1/tutorials/enrolled/client/12
 
 ###
 GET http://localhost:8080/api/v1/tutorials/mytutorials/instructor
@@ -62,3 +62,16 @@ DELETE   http://localhost:8080/api/v1/tutorials/mytutorials/14
 
 ### tutorial detail
 GET   http://localhost:8080/api/v1/tutorials/detail/12
+
+
+### submit project
+
+POST   http://localhost:8080/api/v1/tutorials/10/client1/
+content-type: application/json
+
+{
+"projectUrl":"https://bisratwalle.netlify.app/"
+}
+
+### to check csrf disable/enable
+GET http://localhost:8080/tutorials/all
