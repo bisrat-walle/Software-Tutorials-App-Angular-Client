@@ -152,7 +152,7 @@ public class TutorialRestController {
     public void submitProject(
                     @PathVariable("tutorialId") Long tutorialId, 
                     @PathVariable("username") String username,
-                    @RequestParam ProjectSubmission project){
+                    @RequestBody ProjectSubmission project){
         
 
         Enrollement enrollement = enrollementRepository.
