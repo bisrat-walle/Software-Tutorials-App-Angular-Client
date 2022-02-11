@@ -62,8 +62,8 @@ public class SecurityConfig {
             .logoutSuccessUrl("/")
             .and()
             .csrf()
-            .disable ()
-            
+            .ignoringAntMatchers("/api/**")
+            .and()
             .build();
     }
 
