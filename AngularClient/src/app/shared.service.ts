@@ -6,44 +6,48 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class SharedService {
-  readonly APIUrl  = 'http://127.0.0.1:8080';
+  readonly APIUrl  = 'http://127.0.0.1:8080/api/v1';
 
   constructor(private http:HttpClient) { }
 
   getAllTutorials():Observable<any[]>{
     return this.http.get<any>(this.APIUrl + '/tutorials/all');
   }
-
-  createTutorial(val:any){
-    return this.http.post(this.APIUrl + '/tutorials/', val);
+  
+  getTutorial(tutorialId:any):Observable<any[]>{
+    return this.http.get<any>(this.APIUrl + '/tutorials/'+tutorialId);
   }
 
-  editTutorial(val:any){
-    return this.http.put(this.APIUrl + '/tutorials/', val);
+  createTutorial(instructor:string, val:any){
+    return this.http.post(this.APIUrl + '/tutorials/myTutorials/'+instructor, val);
   }
 
-  deleteTutorial(val:any){
-    return this.http.delete(this.APIUrl + '/student/' + val);
+  editTutorial(tutorialId:any){
+    return this.http.put(this.APIUrl + '/tutorials/myTutorials'+tutorialId, val);
   }
 
-  getEnrolledTutorials():Observable<any[]>{
-    return this.http.get<any>(this.APIUrl + '/tutorials/enrolled/');
+  deleteTutorial(tutorialId:any){
+    return this.http.delete(this.APIUrl + '/tutorials/' + tutorialId);
+  }
+
+  getEnrolledTutorials(client:string):Observable<any[]>{
+    return this.http.get<any>(this.APIUrl + '/tutorials/enrolled/'+client);
   }
   
-  getMyTutorials():Observable<any[]>{
-    return this.http.get<any>(this.APIUrl + '/tutorials/myTutorials/');
+  getMyTutorials(instructor:string):Observable<any[]>{
+    return this.http.get<any>(this.APIUrl + '/tutorials/myTutorials/'+instructor);
   }
 
-  enrollTutorial(id:any){
-    return this.http.post<any>(this.APIUrl + '/tutorials/enroll/', id);
+  enrollTutorial(client:string, tutorialId:any){
+    return this.http.post<any>(this.APIUrl + '/tutorials/enroll/'+client+"/"+tutorialId);
   }
 
-  unenrollTutorial(val:any){
-    return this.http.post(this.APIUrl + '/tutorials/unenroll/', val);
+  unenrollTutorial(client:string, tutorialId:any){
+    return this.http.delete(this.APIUrl + '/tutorials/enroll/'+client+"/"+tutorialId);
   }
 
-  submitProject(val:any){
-    return this.http.post(this.APIUrl + '/project/submit', val);
+  submitProject(tutorialId:string, client:string, project:any){
+    return this.http.post(this.APIUrl + '/tutorials/'+tutorialId+"/"+client, project);
   }
 
   register(val:any){
@@ -60,10 +64,6 @@ export class SharedService {
 
   updateProfile(val:any){
     return this.http.post(this.APIUrl + '/profile/', val);
-  }
-
-  updateSchedule(val:any){
-    return this.http.put(this.APIUrl + '/schedule/', val);
   }
   
   getUserRole(){
