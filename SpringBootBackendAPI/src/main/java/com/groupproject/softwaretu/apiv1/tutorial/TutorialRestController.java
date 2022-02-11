@@ -110,7 +110,7 @@ public class TutorialRestController {
     }
 
 
-    @PutMapping(path="/mytutorials/{tutorialId}", consumes="application/json")
+    @PutMapping(path="/{tutorialId}", consumes="application/json")
     @ResponseStatus(HttpStatus.OK)
     public Tutorial updateTutorial(@PathVariable ("tutorialId") Long tutorialId,
         @RequestBody Tutorial tutorial
@@ -119,7 +119,7 @@ public class TutorialRestController {
         return tutorialRepository.save(tutorial);
     }
 
-    @PatchMapping(path="/mytutorials/{tutorialId}", consumes="application/json")
+    @PatchMapping(path="/{tutorialId}", consumes="application/json")
     @ResponseStatus(HttpStatus.OK)
     public Tutorial partialUpdateTutorial(@PathVariable ("tutorialId") Long tutorialId,
         @RequestBody Tutorial patch
@@ -135,14 +135,14 @@ public class TutorialRestController {
         return tutorialRepository.save(tutorial);
     }
 
-    @DeleteMapping(path="/mytutorials/{tutorialId}")
+    @DeleteMapping(path="/{tutorialId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTutorial(@PathVariable ("tutorialId") Long tutorialId){
         tutorialService.deleteTutorialCascadeProject(tutorialId);
     }
 
 
-    @GetMapping("/detail/{tutorialId}")
+    @GetMapping("/{tutorialId}")
     public ResponseEntity<Tutorial> getTutorialDetailsById(@PathVariable("tutorialId") Long tutorialId){
         return new ResponseEntity<>(tutorialRepository.findByTutorialId(tutorialId), HttpStatus.OK);
     }

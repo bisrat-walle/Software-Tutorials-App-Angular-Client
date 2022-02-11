@@ -26,7 +26,7 @@ content-type: application/json
 }
 
 ### put tutorial
-PUT http://localhost:8080/api/v1/tutorials/mytutorials/14
+PUT http://localhost:8080/api/v1/tutorials/14
 content-type: application/json
 
 {
@@ -48,7 +48,7 @@ content-type: application/json
 
 ### patch tutorial
 
-PATCH  http://localhost:8080/api/v1/tutorials/mytutorials/14
+PATCH  http://localhost:8080/api/v1/tutorials/14
 content-type: application/json
 
 {
@@ -57,11 +57,11 @@ content-type: application/json
 
 
 ### delete tutorial
-DELETE   http://localhost:8080/api/v1/tutorials/mytutorials/14
+DELETE   http://localhost:8080/api/v1/tutorials/14
 
 
 ### tutorial detail
-GET   http://localhost:8080/api/v1/tutorials/detail/12
+GET   http://localhost:8080/api/v1/tutorials/12
 
 
 ### submit project
